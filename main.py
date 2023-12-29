@@ -13,6 +13,10 @@ headers = {
     "x-app-key": API_KEY
 }
 
+sheety_headers = {
+    "Authorization": sheety_token
+}
+
 exercise_config = {
     "query": input("Tell me which exercises you did. ")
 }
@@ -23,7 +27,7 @@ result = response.json()
 
 sheety_config = {
     "workout": {
-        "date": today.strftime("%Y%m%d"),
+        "date": today.strftime("%Y/%m/%d"),
         "time": today.strftime("%X"),
         "exercise": result["exercises"][0]["name"].title(),
         "duration": result["exercises"][0]["duration_min"],
@@ -33,5 +37,5 @@ sheety_config = {
 
 # print(sheety_config)
 
-sheet_response = requests.post(sheety_endpoint, json=sheety_config)
+sheet_response = requests.post(sheety_endpoint, json=sheety_config, headers=sheety_headers)
 print(sheet_response.text)
